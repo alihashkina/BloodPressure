@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragment.GeneralPage">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="generalPageViewModel"
+            type="com.example.bloodpressure.viewModel.GeneralPageViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_white_1000"
+        android:gravity="fill"
+        android:orientation="vertical">
+
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="Diary" />
+
+            <!--            <com.google.android.material.tabs.TabItem-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:clickable="false"-->
+            <!--                android:text=""-->
+            <!--                android:visibility="gone" />-->
+
+            <!--            <com.google.android.material.tabs.TabItem-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:clickable="false"-->
+            <!--                android:text=""-->
+            <!--                android:visibility="gone" />-->
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <LinearLayout
+            android:id="@+id/txtOnbord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/txtOnbordH6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style = "@style/TextAppearance.MaterialComponents.Headline6"
+                android:text="How to use this application " />
+            <TextView
+                android:id="@+id/txtOnbordB1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style = "@style/TextAppearance.MaterialComponents.Body1"
+                android:text="Set your current sugar level and press save button. You also can change the date and set exact tags about your activity, food and health.\nWe are happy to help you track your sugar level and stay healthy" />
+        </LinearLayout>
+
+
+        <HorizontalScrollView
+            android:id="@+id/scrollGraph"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:visibility="gone"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1">
+
+            <view
+                android:id="@+id/graph"
+                class="im.dacer.androidcharts.LineView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textDirection="ltr" />
+
+        </HorizontalScrollView>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/txtRecord"
+                        style="@style/TextAppearance.MdcTypographyStyles.Headline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_calendar"
+                        android:text=""
+                        app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <HorizontalScrollView
+                        android:id="@+id/horizontalScrollView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtRecord">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.chip.ChipGroup
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="20dp">
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/chip1"
+                                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Insulin"
+                                    android:textColor="@color/md_black_1000" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/chip2"
+                                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Weakness"
+                                    android:textColor="@color/md_black_1000" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/chip3"
+                                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sport"
+                                    android:textColor="@color/md_black_1000" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/chip4"
+                                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Fast food"
+                                    android:textColor="@color/md_black_1000" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/chip5"
+                                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Diet"
+                                    android:textColor="@color/md_black_1000" />
+
+
+                            </com.google.android.material.chip.ChipGroup>
+
+
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+                    <com.shawnlin.numberpicker.NumberPicker
+                        android:id="@+id/nPickUpper"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:width="100dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toTopOf="@+id/btnSave"
+                        app:layout_constraintEnd_toStartOf="@+id/txtDiv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+                        app:layout_constraintVertical_bias="1.0"
+                        app:np_dividerColor="@color/md_blue_700"
+                        app:np_dividerThickness="1dp"
+                        app:np_max="300"
+                        app:np_min="0"
+                        app:np_textSize="24sp"
+                        app:np_value="120" />
+
+                    <TextView
+                        android:id="@+id/txtDiv"
+                        style="@style/TextAppearance.MaterialComponents.Headline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:textColor="@color/md_black_1000"
+                        app:layout_constraintBottom_toTopOf="@+id/btnSave"
+                        app:layout_constraintEnd_toStartOf="@id/nPickLower"
+                        app:layout_constraintStart_toEndOf="@id/nPickUpper"
+                        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+                    <com.shawnlin.numberpicker.NumberPicker
+                        android:id="@+id/nPickLower"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:width="100dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toTopOf="@+id/btnSave"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.4"
+                        app:layout_constraintStart_toEndOf="@+id/txtDiv"
+                        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+                        app:layout_constraintVertical_bias="1.0"
+                        app:np_dividerColor="@color/md_blue_700"
+                        app:np_dividerThickness="1dp"
+                        app:np_max="200"
+                        app:np_min="0"
+                        app:np_selectedTextSize="24sp"
+                        app:np_textSize="24sp"
+                        app:np_value="80" />
+
+                    <Button
+                        android:id="@+id/btnSave"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.Button.Small"
+                        android:gravity="center|center_vertical|center_horizontal"
+                        android:text="SAVE"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.501"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</layout>
