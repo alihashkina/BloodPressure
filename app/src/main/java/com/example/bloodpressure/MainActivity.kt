@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         verifyStoragePermissions(this)
     }
 
+    override fun onBackPressed() {
+        moveTaskToBack(true)
+    }
+
     fun verifyStoragePermissions(activity: Activity?) {
         // Check if we have write permission
         val permission =
