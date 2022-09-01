@@ -63,13 +63,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style = "@style/TextAppearance.MaterialComponents.Headline6"
-                android:text="How to use this application " />
+                android:text="How to use this application" />
             <TextView
                 android:id="@+id/txtOnbordB1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style = "@style/TextAppearance.MaterialComponents.Body1"
-                android:text="Set your current sugar level and press save button. You also can change the date and set exact tags about your activity, food and health.\nWe are happy to help you track your sugar level and stay healthy" />
+                android:text="Set your current blood pressure and press save button. You also can change the date and set exact tags about your activity, food and health. \nWe are happy to help you track your blood pressure and stay healthy" />
         </LinearLayout>
 
 
