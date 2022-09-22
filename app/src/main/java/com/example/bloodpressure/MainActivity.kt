@@ -8,8 +8,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import com.example.bloodpressure.fragment.GeneralPage
+import com.example.bloodpressure.fragment.TabFragment
 
 class MainActivity : AppCompatActivity() {
+
+    companion object{
+        var tabRecord : String? = null
+        var tabStatistcs : String? = null
+    }
 
     private val REQUEST_EXTERNAL_STORAGE = 1
     private val PERMISSIONS_STORAGE = arrayOf<String>(
@@ -23,10 +29,12 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.containerView, GeneralPage.newInstance())
+                .add(R.id.containerView, TabFragment.newInstance())
                 .addToBackStack(null)
                 .commit()
         }
+        tabRecord = this.getString(R.string.record)
+        tabStatistcs = this.getString(R.string.statistics)
         verifyStoragePermissions(this)
     }
 
