@@ -8,6 +8,7 @@ import com.example.bloodpressure.MainActivity.Companion.tabStatistcs
 import com.example.bloodpressure.fragment.GeneralPage
 import com.example.bloodpressure.fragment.Statistics
 
+//адаптер для табов
 class PagerAdapter (fm: FragmentManager): FragmentPagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
         return when (position){

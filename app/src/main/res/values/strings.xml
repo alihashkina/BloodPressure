@@ -91,6 +91,11 @@
     <string name="vasodilators">Vasodilators</string>
     <string name="otherDrugs">Other drugs</string>
     <string name="statistics">Statistics</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pressure">Pressure</string>
+    <string name="date">Date</string>
+    <string name="txtOtherTags">Other tags</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="btnOtherTags">Add</string>
+    <string name="editTxtOtherTags">Enter an additional tag</string>
 </resources>
