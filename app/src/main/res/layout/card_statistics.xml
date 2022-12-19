@@ -21,9 +21,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_more"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingEnd="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_gravity="end"
             />
 
@@ -34,57 +34,61 @@
 
                 <TextView
                     android:id="@+id/cardUpper"
-                    style="@style/TextAppearance.MdcTypographyStyles.Headline5"
+                    style="@style/TextAppearance.MdcTypographyStyles.Headline6"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="120"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
                     android:textColor="@color/md_black_1000"
-                    android:textStyle="bold" />
+                    />
 
                 <TextView
                     android:id="@+id/cardDouble"
-                    style="@style/TextAppearance.MdcTypographyStyles.Headline5"
+                    style="@style/TextAppearance.MdcTypographyStyles.Headline6"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="/"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:textColor="@color/md_black_1000"
-                    android:textStyle="bold"/>
+                    />
 
                 <TextView
                     android:id="@+id/cardLower"
-                    style="@style/TextAppearance.MdcTypographyStyles.Headline5"
+                    style="@style/TextAppearance.MdcTypographyStyles.Headline6"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="80"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:textColor="@color/md_black_1000"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/cardDate"
-                    style="@style/TextAppearance.MdcTypographyStyles.Headline5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginStart="10dp"
-                    android:padding="10dp"
-                    android:textColor="@color/md_grey_500"
-                    android:text="06.09.2022"/>
+                    android:layout_marginEnd="5dp"
+                    android:textColor="@color/md_black_1000"
+                    />
+
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/cardDate"
+                style="@style/TextAppearance.MdcTypographyStyles.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textColor="@color/md_grey_400"
+                android:text="06.09.2022"/>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:layout_margin="10dp">
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -97,7 +101,7 @@
                     style="@style/TextAppearance.MdcTypographyStyles.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
+                    android:layout_marginStart="10dp"
                     android:text="TextView"
                     android:textColor="@color/green" />
             </LinearLayout>
@@ -106,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:layout_margin="10dp">
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -119,7 +123,7 @@
                     style="@style/TextAppearance.MdcTypographyStyles.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
+                    android:layout_marginStart="10dp"
                     android:text="TextView"
                     android:textColor="@color/red" />
             </LinearLayout>
@@ -128,7 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:layout_margin="10dp">
 
                 <ImageView
                     android:id="@+id/imageView3"
@@ -141,7 +145,7 @@
                     style="@style/TextAppearance.MdcTypographyStyles.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
+                    android:layout_marginStart="10dp"
                     android:text="TextView"
                     android:textColor="@color/light_blue" />
             </LinearLayout>
@@ -150,7 +154,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:layout_margin="10dp">
 
                 <ImageView
                     android:id="@+id/imageView4"
@@ -163,7 +167,7 @@
                     style="@style/TextAppearance.MdcTypographyStyles.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
+                    android:layout_marginStart="10dp"
                     android:text="TextView"
                     android:textColor="@color/yellow" />
             </LinearLayout>
@@ -172,7 +176,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:layout_margin="10dp">
 
                 <ImageView
                     android:id="@+id/imageView5"
@@ -185,7 +189,7 @@
                     style="@style/TextAppearance.MdcTypographyStyles.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
+                    android:layout_marginStart="10dp"
                     android:text="TextView"
                     android:textColor="@color/md_purple_900" />
             </LinearLayout>

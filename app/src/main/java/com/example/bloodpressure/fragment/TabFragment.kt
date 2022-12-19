@@ -29,9 +29,11 @@ class TabFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         //заполнение табов
-        val pagerAdapter = PagerAdapter(childFragmentManager)
-        bindingTab.viewPager.adapter = pagerAdapter
-        bindingTab.tabs.setupWithViewPager(bindingTab.viewPager)
+        bindingTab.apply {
+            val pagerAdapter = PagerAdapter(childFragmentManager, requireContext())
+            viewPager.adapter = pagerAdapter
+            tabs.setupWithViewPager(viewPager)
+        }
     }
 
 }

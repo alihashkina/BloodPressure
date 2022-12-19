@@ -1,7 +1,10 @@
 package com.example.bloodpressure.viewModel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class StatisticsViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+    companion object{
+        var counterSts: MutableLiveData<Boolean> = MutableLiveData(true)
+    }
 }

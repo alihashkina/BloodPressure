@@ -10,8 +10,8 @@ android {
         applicationId "com.flycode.bloodpressure"
         minSdk 21
         targetSdk 32
-        versionCode 2
-        versionName "1.1"
+        versionCode 10
+        versionName "1.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -50,6 +50,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    implementation 'androidx.room:room-common:2.2.6'
+    implementation 'androidx.room:room-ktx:2.2.6'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -68,4 +70,19 @@ dependencies {
 
     //Number Picker
     implementation 'io.github.ShawnLin013:number-picker:2.4.13'
+
+    //Dialog
+    implementation 'com.google.android.material:material:1.2.0'
+
+    implementation 'com.google.code.gson:gson:2.8.8'
+
+    //Share
+    implementation 'com.github.EsmaeelNabil:Share-em:1.0.7'
+
+    //LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+
+    implementation 'com.github.AAChartModel:AAChartCore-Kotlin:-SNAPSHOT'
 }

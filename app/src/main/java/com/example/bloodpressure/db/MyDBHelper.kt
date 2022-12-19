@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class MyDBHelper(context: Context) : SQLiteOpenHelper(context, "USERS", null, 5) {
+class MyDBHelper(context: Context) : SQLiteOpenHelper(context, "USERS", null, 1) {
 
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -12,11 +12,11 @@ class MyDBHelper(context: Context) : SQLiteOpenHelper(context, "USERS", null, 5)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        if (oldVersion < newVersion) {
-            db?.execSQL("ALTER TABLE USERS ADD ID INT NOT NULL DEFAULT(0)")
-            db?.execSQL("ALTER TABLE USERS ADD CHIPSOTHER TEXT NOT NULL DEFAULT(0)")
-            db?.execSQL("UPDATE USERS SET ID = USERS.USERID + 1000000")
-        }
-        }
+//        if (oldVersion < 5) {
+//            db?.execSQL("ALTER TABLE USERS ADD ID INT NOT NULL DEFAULT(0)")
+//            db?.execSQL("ALTER TABLE USERS ADD CHIPSOTHER TEXT NOT NULL DEFAULT(0)")
+//            db?.execSQL("UPDATE USERS SET ID = USERS.USERID + 1000000")
+//        }
     }
+}
 

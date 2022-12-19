@@ -1,90 +1,81 @@
 package com.example.bloodpressure.viewModel
 
+import android.content.ContentValues
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.util.Log
 import android.view.View
-import android.widget.EditText
-import android.widget.HorizontalScrollView
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.view.children
-import androidx.core.view.marginBottom
+import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.bloodpressure.MainActivity.Companion.helper
 import com.example.bloodpressure.R
+import com.example.bloodpressure.adapters.CardAdapter
+import com.example.bloodpressure.adapters.CardAdapter.Companion.deleteCard
 import com.example.bloodpressure.adapters.dataClass.Card
 import com.example.bloodpressure.db.MyDBHelper
-import com.example.bloodpressure.fragment.GeneralPage
-import com.example.bloodpressure.fragment.GeneralPage.Companion.arrayDateGraph
-import com.example.bloodpressure.fragment.GeneralPage.Companion.arrayLowerGraph
-import com.example.bloodpressure.fragment.GeneralPage.Companion.arrayUpperGraph
 import com.example.bloodpressure.fragment.GeneralPage.Companion.bindingGeneralPage
-import com.example.bloodpressure.fragment.GeneralPage.Companion.chipsCDB
-import com.example.bloodpressure.fragment.GeneralPage.Companion.chipsCareCheck
-import com.example.bloodpressure.fragment.GeneralPage.Companion.chipsCheckTxt
-import com.example.bloodpressure.fragment.GeneralPage.Companion.chipsHDB
-import com.example.bloodpressure.fragment.GeneralPage.Companion.chipsHealthyCheck
-import com.example.bloodpressure.fragment.GeneralPage.Companion.chipsSDB
-import com.example.bloodpressure.fragment.GeneralPage.Companion.chipsSymptomsCheck
-import com.example.bloodpressure.fragment.GeneralPage.Companion.chipsUhDB
-import com.example.bloodpressure.fragment.GeneralPage.Companion.chipsUnHealthyCheck
-import com.example.bloodpressure.fragment.GeneralPage.Companion.dateDB
-import com.example.bloodpressure.fragment.GeneralPage.Companion.lowerDB
-import com.example.bloodpressure.fragment.GeneralPage.Companion.nPickLowerValues
-import com.example.bloodpressure.fragment.GeneralPage.Companion.nPickUpperValues
-import com.example.bloodpressure.fragment.GeneralPage.Companion.upperDB
+import com.example.bloodpressure.fragment.GeneralPage.Companion.tinyDB
 import com.example.bloodpressure.fragment.Statistics
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import im.dacer.androidcharts.LineView
-import java.math.RoundingMode
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.bloodpressure.viewModel.StatisticsViewModel.Companion.counterSts
+import kotlin.collections.ArrayList
 
 class GeneralPageViewModel : ViewModel() {
 
+    var counter: MutableLiveData<Int> = MutableLiveData(0)
+
     companion object{
-        val calendar = Calendar.getInstance()
-        var year = 0
-        var month = 0
-        var day = 0
-        var hour = 0
-        var minute = 0
-        lateinit var cards: Card
+        var dateDB = ""
+        var arrayUpperGraph: ArrayList<Int> = arrayListOf()
+        var arrayLowerGraph: ArrayList<Int> = arrayListOf()
+        var arrayDateGraph : MutableList<String> = mutableListOf()
     }
 
-    var dateSt = ""
-    var chipsHSt = ""
-    var chipsUhSt = ""
-    var chipsSSt = ""
-    var chipsCSt = ""
-    var sugarSt = 0
-    var sugarStml = 0
-    var chipsGroup = ""
-    var colors = intArrayOf()
+    lateinit var cards: Card
+    var chipsHDB = ""
+    var chipsUhDB = ""
+    var chipsSDB = ""
+    var chipsCDB = ""
+    var chipsODB = ""
+    var upperDB = 120
+    var lowerDB = 80
+    var idDB = 0
+    var cv = ContentValues()
 
-    fun getDateTimeCalendar(txtRecord: TextView, context: Context){
-        year = calendar.get(Calendar.YEAR)
-        month = calendar.get(Calendar.MONTH)
-        day = calendar.get(Calendar.DAY_OF_MONTH)
-        hour = calendar.get(Calendar.HOUR)
-        minute = calendar.get(Calendar.MINUTE)
-        var sdf = SimpleDateFormat("dd.MM.yyyy HH:mm")
-        var currentDate = sdf.format(Date())
-        txtRecord.text = "${context.getString(R.string.record)} $currentDate"
+    fun addDB(context: Context, dateDB: String, upperDB: Int, lowerDB: Int, chipsHealthyDB: List<String>, chipsUnHealthyDB: List<String>, chipsSymptomsDB: List<String>, chipsCareDB: List<String>, daysDB: Int, monthDB: Int, yearsDB: Int, hoursDB: Int, minuteDB: Int, chipsOtherDB: List<String>, idDB: Int){
+
+        cv.put("DATE", dateDB)
+        cv.put("UPPER", upperDB)
+        cv.put("LOWER", lowerDB)
+        cv.put("CHIPSHEALTHY", chipsHealthyDB.toString())
+        cv.put("CHIPSUNHEALTHY", chipsUnHealthyDB.toString().replace("[", "").replace("]", ""))
+        cv.put("CHIPSSYMPTOMS", chipsSymptomsDB.toString().replace("[", "").replace("]", ""))
+        cv.put("CHIPSCARE", chipsCareDB.toString().replace("[", "").replace("]", ""))
+        cv.put("DAYS", daysDB)
+        cv.put("MONTH", monthDB)
+        cv.put("YEARS", yearsDB)
+        cv.put("HOURS", hoursDB)
+        cv.put("MINUTE", minuteDB)
+        cv.put("CHIPSOTHER", chipsOtherDB.toString().replace("[", "").replace("]", ""))
+        cv.put("ID", idDB)
+
+        MyDBHelper(context).writableDatabase.insert("USERS", null, cv)
     }
 
-    fun graph(graph: LineView, context: Context, scrollGraph: HorizontalScrollView, txtOnbord: LinearLayout){
-        var helper = MyDBHelper(context!!)
+    fun readDB(){
         var db = helper.readableDatabase
-        var rs = db.rawQuery("SELECT DATE, UPPER, LOWER, CHIPSHEALTHY, CHIPSUNHEALTHY, CHIPSSYMPTOMS, CHIPSCARE, DAYS, MONTH, YEARS, HOURS, MINUTE FROM USERS ORDER BY YEARS, MONTH, DAYS, HOURS, MINUTE ASC", null)
+        var rs = db.rawQuery(
+            "SELECT DATE, UPPER, LOWER, CHIPSHEALTHY, CHIPSUNHEALTHY, CHIPSSYMPTOMS, CHIPSCARE, CHIPSOTHER, DAYS, MONTH, YEARS, HOURS, MINUTE, ID FROM USERS ORDER BY YEARS, MONTH, DAYS, HOURS, MINUTE ASC",
+            null
+        )
+
         arrayDateGraph = arrayListOf()
         arrayUpperGraph = arrayListOf()
         arrayLowerGraph = arrayListOf()
 
-        while (rs.moveToNext()) {
+        if(!deleteCard){
+            Statistics.adapter.update()
+        }
+
+        while (rs != null && rs.getCount() > 0 && rs.moveToNext()) {
             dateDB = rs.getString(0)
             upperDB = rs.getString(1).toInt()
             lowerDB = rs.getString(2).toInt()
@@ -92,117 +83,150 @@ class GeneralPageViewModel : ViewModel() {
             chipsUhDB = rs.getString(4).replace(",", " | ")
             chipsSDB = rs.getString(5).replace(",", " | ")
             chipsCDB = rs.getString(6).replace(",", " | ")
+            chipsODB = rs.getString(7).replace(",", " | ")
+            idDB = rs.getString(13).toInt()
+
+            tinyDB.putString("DateDB", "+")
+
             arrayDateGraph.add(dateDB)
             arrayUpperGraph.add(upperDB)
             arrayLowerGraph.add(lowerDB)
 
-            cards = Card(dateDB, chipsHDB, chipsUhDB, chipsSDB, chipsCDB, upperDB.toString(), lowerDB.toString())
-            Statistics.adapter.addCard(GeneralPageViewModel.cards)
-        }
+            if (!deleteCard) {
+                cards = Card(
+                    dateDB,
+                    chipsHDB,
+                    chipsUhDB,
+                    chipsSDB,
+                    chipsCDB,
+                    upperDB,
+                    lowerDB,
+                    chipsODB,
+                    idDB
+                )
+                Statistics.adapter.addCard(cards)
+            }
 
-        if(dateDB != "") {
-            scrollGraph.visibility = View.VISIBLE
-            txtOnbord.visibility = View.GONE
-            var bloodLists = ArrayList<ArrayList<Int>>()
-            bloodLists = arrayListOf(arrayUpperGraph, arrayLowerGraph)
-            graph.setDrawDotLine(false) //optional
-            graph.getResources().getColor(R.color.md_white_1000)
-            graph.setShowPopup(LineView.SHOW_POPUPS_All) //optional
-            graph.setBottomTextList(arrayDateGraph as ArrayList<String>?)
-            graph.setColorArray(intArrayOf(Color.RED, Color.BLUE))
-            graph.marginBottom
-            graph.paddingBottom
-            graph.setDataList(bloodLists)
-        }
-    }
-
-    fun chipsColorHealthy(chipGroupHealthy: ChipGroup, view: View){
-        chipsGroup = "Healthy"
-        handleSelection(view)
-        chipGroupHealthy.children.forEach {
-            val chip = it as Chip
-            chip.chipBackgroundColor = colorStates()
-            (it as Chip).setOnCheckedChangeListener { buttonView, isChecked ->
-                handleSelection(view)
+            counter.value?.let {
+                counter.value = it + 1
             }
         }
+
     }
 
-    fun chipsColorUnhealthy(chipGroupUnhealthy: ChipGroup, view: View){
-        chipsGroup = "Unhealthy"
-        handleSelection(view)
-        chipGroupUnhealthy.children.forEach {
-            val chip = it as Chip
-            chip.chipBackgroundColor = colorStates()
-            (it as Chip).setOnCheckedChangeListener { buttonView, isChecked ->
-                handleSelection(view)
-            }
+    fun deleteAllDB(context: Context){
+        Toast.makeText(context, context.getString(R.string.toastDelete), Toast.LENGTH_SHORT).show()
+        helper.writableDatabase.delete("USERS", null, null)
+        counterSts.value?.let {
+            counterSts.value = true
         }
+        readDB()
     }
 
-    fun chipsColorSymptoms(chipGroupSymptoms: ChipGroup, view: View){
-        chipsGroup = "Symptoms"
-        handleSelection(view)
-        chipGroupSymptoms.children.forEach {
-            val chip = it as Chip
-            chip.chipBackgroundColor = colorStates()
-            (it as Chip).setOnCheckedChangeListener { buttonView, isChecked ->
-                handleSelection(view)
-            }
-        }
+    fun deleteCardDB(context: Context){
+        Toast.makeText(context, context.getString(R.string.toastDelete), Toast.LENGTH_SHORT).show()
+        helper.writableDatabase.delete("USERS", "USERID=${CardAdapter.idDB}", null)
+        readDB()
+        bindingGeneralPage.deleteCard.callOnClick()
     }
 
-    fun chipsColorCare(chipGroupCare: ChipGroup, view: View){
-        chipsGroup = "Care"
-        handleSelection(view)
-        chipGroupCare.children.forEach {
-            val chip = it as Chip
-            chip.chipBackgroundColor = colorStates()
-            (it as Chip).setOnCheckedChangeListener { buttonView, isChecked ->
-                handleSelection(view)
-            }
-        }
-    }
+    fun getHealthyList(context: Context):List<String>{
+        return  listOf(
+            context.resources.getString(R.string.breathingExercises),
+            context.resources.getString(R.string.cardioWorkout),
+            context.resources.getString(R.string.dairy),
+            context.resources.getString(R.string.diet),
+            context.resources.getString(R.string.gardening),
+            context.resources.getString(R.string.goodSleep),
+            context.resources.getString(R.string.highFiberFood),
+            context.resources.getString(R.string.housework),
+            context.resources.getString(R.string.lowSaltDiet),
+            context.resources.getString(R.string.seafood),
+            context.resources.getString(R.string.sex),
+            context.resources.getString(R.string.sport),
+            context.resources.getString(R.string.stretching),
+            context.resources.getString(R.string.vegetables),
+            context.resources.getString(R.string.walking),
+            context.resources.getString(R.string.yoga),
+            context.resources.getString(R.string.otherPhysicalActivity)
 
-    fun colorStates(): ColorStateList {
-        val states = arrayOf(
-            intArrayOf(android.R.attr.state_checked),
-            intArrayOf(-android.R.attr.state_checked)
         )
-        when (chipsGroup){
-            "Healthy" -> colors = intArrayOf(Color.parseColor("#69F0AE"), Color.parseColor("#E0E0E0"))
-            "Unhealthy" -> colors = intArrayOf(Color.parseColor("#FF8A80"), Color.parseColor("#E0E0E0"))
-            "Symptoms" -> colors = intArrayOf(Color.parseColor("#81D4fA"),Color.parseColor("#E0E0E0"))
-            "Care" -> colors = intArrayOf(Color.parseColor("#FFF590"),Color.parseColor("#E0E0E0"))
-        }
-        return ColorStateList(states, colors)
     }
+    fun getUnhealthyList(context: Context):List<String>{
+        return  listOf(
+            context.resources.getString(R.string.alcohol),
+            context.resources.getString(R.string.coffee),
+            context.resources.getString(R.string.energeticDrinks),
+            context.resources.getString(R.string.fastfood),
+            context.resources.getString(R.string.fatFood),
+            context.resources.getString(R.string.irregularEating),
+            context.resources.getString(R.string.irregularSports),
+            context.resources.getString(R.string.lateDinner),
+            context.resources.getString(R.string.longSitting),
+            context.resources.getString(R.string.noActivity),
+            context.resources.getString(R.string.overeating),
+            context.resources.getString(R.string.overpressure),
+            context.resources.getString(R.string.pastry),
+            context.resources.getString(R.string.processedFood),
+            context.resources.getString(R.string.salt),
+            context.resources.getString(R.string.smoking),
+            context.resources.getString(R.string.soda),
+            context.resources.getString(R.string.stress),
+            context.resources.getString(R.string.sugar),
+            context.resources.getString(R.string.sweets)
 
-    fun handleSelection(view: View){
-        bindingGeneralPage.chipGroupHealthy.checkedChipIds.forEach{
-            val chip = view?.findViewById<Chip>(it)
-            chipsHealthyCheck.add("${chip?.text}")
-            chip.isChecked = true
-        }
-        bindingGeneralPage.chipGroupUnhealthy.checkedChipIds.forEach{
-            val chip = view?.findViewById<Chip>(it)
-            chipsUnHealthyCheck.add("${chip?.text}")
-            chip.isChecked = true
-        }
-        bindingGeneralPage.chipGroupSymptoms.checkedChipIds.forEach{
-            val chip = view?.findViewById<Chip>(it)
-            chipsSymptomsCheck.add("${chip?.text}")
-            chip.isChecked = true
-
-        }
-        bindingGeneralPage.chipGroupCare.checkedChipIds.forEach{
-            val chip = view?.findViewById<Chip>(it)
-            chipsCareCheck.add("${chip?.text}")
-            chip.isChecked = true
-        }
+        )
     }
-
-    fun btnSaveText(btnSave: ExtendedFloatingActionButton, context: Context){
-        btnSave.text = "$nPickUpperValues / $nPickLowerValues ${context.getString(R.string.save)}"
+    fun getSymptomsList(context: Context):List<String>{
+        return  listOf(
+            context.resources.getString(R.string.confused),
+            context.resources.getString(R.string.coordinationProblems),
+            context.resources.getString(R.string.crankyOrImpatient),
+            context.resources.getString(R.string.decreasedVision),
+            context.resources.getString(R.string.dizzy),
+            context.resources.getString(R.string.dryMouth),
+            context.resources.getString(R.string.drySkin),
+            context.resources.getString(R.string.dyspnea),
+            context.resources.getString(R.string.energetic),
+            context.resources.getString(R.string.fastHeartbeat),
+            context.resources.getString(R.string.fatigue),
+            context.resources.getString(R.string.feelWell),
+            context.resources.getString(R.string.goodMood),
+            context.resources.getString(R.string.happy),
+            context.resources.getString(R.string.headache),
+            context.resources.getString(R.string.healSlowly),
+            context.resources.getString(R.string.hunger),
+            context.resources.getString(R.string.itchySkin),
+            context.resources.getString(R.string.loseWeightWithoutTrying),
+            context.resources.getString(R.string.nausea),
+            context.resources.getString(R.string.nervous),
+            context.resources.getString(R.string.nightmares),
+            context.resources.getString(R.string.numbOrTinglingHandsOrFeet),
+            context.resources.getString(R.string.painInChest),
+            context.resources.getString(R.string.paleSkin),
+            context.resources.getString(R.string.shaky),
+            context.resources.getString(R.string.sleepy),
+            context.resources.getString(R.string.sweaty),
+            context.resources.getString(R.string.thirsty),
+            context.resources.getString(R.string.urinateALot),
+            context.resources.getString(R.string.weak),
+            context.resources.getString(R.string.otherSymptoms)
+        )
+    }
+    fun getCareList(context: Context):List<String>{
+        return  listOf(
+            context.resources.getString(R.string.aceInhibitors),
+            context.resources.getString(R.string.alphaBlockers),
+            context.resources.getString(R.string.alpha2ReceptorAgonists),
+            context.resources.getString(R.string.angiotensin2ReceptorBlockers),
+            context.resources.getString(R.string.betaBlockers),
+            context.resources.getString(R.string.calciumChannelBlockers),
+            context.resources.getString(R.string.centralAgonists),
+            context.resources.getString(R.string.combinedAlphaAndBetablockers),
+            context.resources.getString(R.string.diuretics),
+            context.resources.getString(R.string.peripheralAdrenergicInhibitors),
+            context.resources.getString(R.string.vasodilators),
+            context.resources.getString(R.string.otherDrugs)
+        )
     }
 }
