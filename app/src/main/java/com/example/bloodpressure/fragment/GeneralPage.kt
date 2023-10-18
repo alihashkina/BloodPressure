@@ -30,10 +30,6 @@ import com.example.bloodpressure.viewModel.GeneralPageViewModel.Companion.arrayD
 import com.example.bloodpressure.viewModel.GeneralPageViewModel.Companion.arrayLowerGraph
 import com.example.bloodpressure.viewModel.GeneralPageViewModel.Companion.arrayUpperGraph
 import com.example.bloodpressure.viewModel.StatisticsViewModel.Companion.counterSts
-import com.github.aachartmodel.aainfographics.aachartcreator.AAChartModel
-import com.github.aachartmodel.aainfographics.aachartcreator.AAChartSymbolType
-import com.github.aachartmodel.aainfographics.aachartcreator.AAChartType
-import com.github.aachartmodel.aainfographics.aachartcreator.AASeriesElement
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -134,7 +130,7 @@ class GeneralPage : Fragment(){
 
             //наблюдатель обновление графика
             viewModel.counter.observe(viewLifecycleOwner, Observer {
-                graph(scrollGraph, txtOnbord)
+                graph(graph, scrollGraph, txtOnbord)
             })
 
             //текст на кнопке сохранить
@@ -142,11 +138,11 @@ class GeneralPage : Fragment(){
 
             //невидимая кнопка для удаления карточки - костыль
             deleteCard.setOnClickListener {
-                graph(scrollGraph, txtOnbord)
+                graph(graph, scrollGraph, txtOnbord)
             }
 
             //получение графика
-            viewModel.readDB()
+            viewModel.readDB(requireContext())
 
             btnSave.setOnClickListener {
                 CardAdapter.deleteCard = false
@@ -201,7 +197,13 @@ class GeneralPage : Fragment(){
                 )
 
                 //обновляем график
-                viewModel.readDB()
+                viewModel.readDB(requireContext())
+
+                chipGroupHealthy.clearCheck()
+                chipGroupUnhealthy.clearCheck()
+                chipGroupSymptoms.clearCheck()
+                chipGroupCare.clearCheck()
+                chipGroupOtherTags.clearCheck()
 
                 Toast.makeText(
                     requireContext(),
@@ -305,10 +307,10 @@ class GeneralPage : Fragment(){
 
 
     fun btnSaveText(btnSave: ExtendedFloatingActionButton, context: Context) {
-        btnSave.text = "${context.getString(R.string.save)}"
+        btnSave.text = "${bindingGeneralPage.nPickUpper.value}/${bindingGeneralPage.nPickLower.value} ${context.getString(R.string.save)}"
     }
 
-    fun graph(scrollGraph: HorizontalScrollView, txtOnbord: LinearLayout) {
+    fun graph(graph: LineView, scrollGraph: HorizontalScrollView, txtOnbord: LinearLayout) {
         if (!tinyDB.getString("DateDB").isEmpty()) {
 
             counterSts.value?.let {
@@ -318,29 +320,16 @@ class GeneralPage : Fragment(){
             bindingGeneralPage.txtOnbord.visibility = View.GONE
             scrollGraph.visibility = View.VISIBLE
 
-            val aaChartModel: AAChartModel = AAChartModel()
-                .chartType(AAChartType.Spline)
-                .backgroundColor("#FFFFFF")
-                .dataLabelsEnabled(true)
-                .legendEnabled(true)
-                .animationDuration(10)
-                .yAxisVisible(true)
-                .yAxisLabelsEnabled(false)
-                .yAxisTitle("")
-                .markerSymbol(AAChartSymbolType.Circle)
-                .colorsTheme(arrayOf("#29B6FC", "#EF5350"))
-                .categories(arrayDateGraph.toTypedArray())
-                .series(
-                    arrayOf(
-                        AASeriesElement()
-                            .name(this.getString(R.string.upper))
-                            .data(arrayUpperGraph.toTypedArray()),
-                        AASeriesElement()
-                            .name(this.getString(R.string.lower))
-                            .data(arrayLowerGraph.toTypedArray())
-                    )
-                )
-            bindingGeneralPage.aaChartView.aa_drawChartWithChartModel(aaChartModel)
+            var bloodPressureLists = ArrayList<ArrayList<Float>>()
+            bloodPressureLists = arrayListOf(arrayUpperGraph as ArrayList<Float>, arrayLowerGraph as ArrayList<Float>)
+            graph.setDrawDotLine(false) //optional
+            graph.getResources().getColor(R.color.md_white_1000)
+            graph.setShowPopup(LineView.SHOW_POPUPS_All) //optional
+            graph.setBottomTextList(arrayDateGraph as ArrayList<String>?)
+            graph.setColorArray(intArrayOf(Color.RED, Color.BLUE))
+            graph.marginBottom
+            graph.paddingBottom
+            graph.setFloatDataList(bloodPressureLists)
 
             tinyDB.remove("DateDB")
 
@@ -348,9 +337,6 @@ class GeneralPage : Fragment(){
             scrollGraph.post {
                 scrollGraph.fullScroll(View.FOCUS_RIGHT)
             }
-            }else{
-                txtOnbord.visibility = View.VISIBLE
-                scrollGraph.visibility = View.GONE
             }
         }
 

@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.bloodpressure.MainActivity.Companion.helper
 import com.example.bloodpressure.R
 import com.example.bloodpressure.adapters.CardAdapter
 import com.example.bloodpressure.adapters.CardAdapter.Companion.deleteCard
@@ -24,8 +23,8 @@ class GeneralPageViewModel : ViewModel() {
 
     companion object{
         var dateDB = ""
-        var arrayUpperGraph: ArrayList<Int> = arrayListOf()
-        var arrayLowerGraph: ArrayList<Int> = arrayListOf()
+        var arrayUpperGraph: ArrayList<Float> = arrayListOf()
+        var arrayLowerGraph: ArrayList<Float> = arrayListOf()
         var arrayDateGraph : MutableList<String> = mutableListOf()
     }
 
@@ -45,7 +44,7 @@ class GeneralPageViewModel : ViewModel() {
         cv.put("DATE", dateDB)
         cv.put("UPPER", upperDB)
         cv.put("LOWER", lowerDB)
-        cv.put("CHIPSHEALTHY", chipsHealthyDB.toString())
+        cv.put("CHIPSHEALTHY", chipsHealthyDB.toString().replace("[", "").replace("]", ""))
         cv.put("CHIPSUNHEALTHY", chipsUnHealthyDB.toString().replace("[", "").replace("]", ""))
         cv.put("CHIPSSYMPTOMS", chipsSymptomsDB.toString().replace("[", "").replace("]", ""))
         cv.put("CHIPSCARE", chipsCareDB.toString().replace("[", "").replace("]", ""))
@@ -60,8 +59,8 @@ class GeneralPageViewModel : ViewModel() {
         MyDBHelper(context).writableDatabase.insert("USERS", null, cv)
     }
 
-    fun readDB(){
-        var db = helper.readableDatabase
+    fun readDB(context: Context){
+        var db = MyDBHelper(context).readableDatabase
         var rs = db.rawQuery(
             "SELECT DATE, UPPER, LOWER, CHIPSHEALTHY, CHIPSUNHEALTHY, CHIPSSYMPTOMS, CHIPSCARE, CHIPSOTHER, DAYS, MONTH, YEARS, HOURS, MINUTE, ID FROM USERS ORDER BY YEARS, MONTH, DAYS, HOURS, MINUTE ASC",
             null
@@ -89,8 +88,8 @@ class GeneralPageViewModel : ViewModel() {
             tinyDB.putString("DateDB", "+")
 
             arrayDateGraph.add(dateDB)
-            arrayUpperGraph.add(upperDB)
-            arrayLowerGraph.add(lowerDB)
+            arrayUpperGraph.add(upperDB.toFloat())
+            arrayLowerGraph.add(lowerDB.toFloat())
 
             if (!deleteCard) {
                 cards = Card(
@@ -116,17 +115,19 @@ class GeneralPageViewModel : ViewModel() {
 
     fun deleteAllDB(context: Context){
         Toast.makeText(context, context.getString(R.string.toastDelete), Toast.LENGTH_SHORT).show()
-        helper.writableDatabase.delete("USERS", null, null)
+        MyDBHelper(context).writableDatabase.delete("USERS", null, null)
+        bindingGeneralPage.scrollGraph.visibility = View.GONE
+        bindingGeneralPage.txtOnbord.visibility = View.VISIBLE
         counterSts.value?.let {
             counterSts.value = true
         }
-        readDB()
+        readDB(context)
     }
 
     fun deleteCardDB(context: Context){
         Toast.makeText(context, context.getString(R.string.toastDelete), Toast.LENGTH_SHORT).show()
-        helper.writableDatabase.delete("USERS", "USERID=${CardAdapter.idDB}", null)
-        readDB()
+        MyDBHelper(context).writableDatabase.delete("USERS", "USERID=${CardAdapter.idDB}", null)
+        readDB(context)
         bindingGeneralPage.deleteCard.callOnClick()
     }
 

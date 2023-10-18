@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/drawable-v24/chip_state_care.xml" value="0.1537037037037037" />
+        <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/drawable-v24/chip_state_symptoms.xml" value="0.18888888888888888" />
+        <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/drawable-v24/chip_state_unhealthy.xml" value="0.18888888888888888" />
         <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/drawable-v24/ic_calendar.xml" value="0.2890625" />
         <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/drawable/chip_state_care.xml" value="0.17407407407407408" />
         <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/drawable/chip_state_healthy.xml" value="0.17407407407407408" />
@@ -16,11 +18,11 @@
         <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/drawable/ic_logo_k31.xml" value="0.2890625" />
         <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/drawable/ic_product_blood_pressure.xml" value="0.2890625" />
         <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/layout/card_statistics.xml" value="0.33" />
+        <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/layout/card_statistics.xml" value="0.1" />
         <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/layout/chip.xml" value="0.1" />
         <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/layout/fragment_tab.xml" value="0.22" />
-        <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/layout/general_page_fragment.xml" value="0.25" />
-        <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/layout/statistics_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/layout/general_page_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/layout/statistics_fragment.xml" value="0.18" />
         <entry key="..\:/Users/Marina/AndroidStudioProjects/BloodPressure/app/src/main/res/menu/popup_menu.xml" value="0.14893617021276595" />
       </map>
     </option>

@@ -10,8 +10,8 @@ android {
         applicationId "com.flycode.bloodpressure"
         minSdk 21
         targetSdk 32
-        versionCode 10
-        versionName "1.9"
+        versionCode 14
+        versionName "1.13"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -65,9 +65,6 @@ dependencies {
     //RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
-    // Graph
-    implementation 'im.dacer:AndroidCharts:1.0.4'
-
     //Number Picker
     implementation 'io.github.ShawnLin013:number-picker:2.4.13'
 
@@ -84,5 +81,7 @@ dependencies {
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
 
-    implementation 'com.github.AAChartModel:AAChartCore-Kotlin:-SNAPSHOT'
+    // Graph
+    implementation 'im.dacer:AndroidCharts:1.0.4'
+    implementation 'com.github.imaNNeoFighT:ArcChartView:1.0.3.1'
 }
